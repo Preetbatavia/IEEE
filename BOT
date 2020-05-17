@@ -1,0 +1,71 @@
+
+int in1=13;
+int in2=12;
+int in3=8;
+int in4=7;
+int ena1=11;
+int ena2=10;
+int ir1=A0;
+int ir2=A1;
+int speed=200;
+int x;
+int y;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(ir1,INPUT);
+  pinMode(ir2,INPUT);
+  pinMode(in1,OUTPUT);
+  pinMode(in2,OUTPUT);
+  pinMode(in3,OUTPUT);
+  pinMode(in4,OUTPUT);
+  pinMode(ena1,OUTPUT);
+  pinMode(ena2,OUTPUT);
+  
+  
+}
+
+void loop()
+{
+  
+x=analogRead(ir1);
+y=analogRead(ir2);
+  if(y<1000 && x<1000)
+  {
+    digitalWrite(in1,HIGH);
+    digitalWrite(in2,LOW);
+    digitalWrite(in3,HIGH);
+    digitalWrite(in4,LOW);
+    analogWrite(ena1,speed);
+    analogWrite(ena2,speed);
+    Serial.println("BOT MOVES FORWARD");
+  }
+
+  else if(y>=1000 && x<1000)
+  {
+    
+    digitalWrite(in1,HIGH);
+    digitalWrite(in2,LOW);
+    analogWrite(ena2,speed);
+    analogWrite(ena1,0);
+    Serial.println("BOT TURNS LEFT");
+  }
+  else if(y<1000 && x>=1000)
+  { 
+    
+    digitalWrite(in3,HIGH);
+    digitalWrite(in4,LOW);
+    analogWrite(ena1,speed);
+    analogWrite(ena2,0);
+    Serial.println("BOT TURNS RIGHT");
+  }
+  
+  else 
+  {
+    
+    analogWrite(ena1,0);
+    analogWrite(ena2,0);
+    Serial.println(" BOT STOPS MOVING");
+  }
+}
